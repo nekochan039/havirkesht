@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>داشبورد | هاویرکشت</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="dashboard">
+
+<header class="header">
+  <h2>داشبورد هاویرکشت</h2>
+  <button id="logoutBtn">خروج</button>
+</header>
+
+<nav class="sidebar">
+  <button data-page="province">ثبت استان</button>
+</nav>
+
+<main class="content">
+
+  <section id="province" class="page hidden">
+    <h3>ثبت استان</h3>
+
+    <div style="margin-bottom:12px">
+      <input id="provinceName" placeholder="نام استان">
+      <button id="addProvinceBtn">افزودن</button>
+    </div>
+
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>نام استان</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody id="provinceTable"></tbody>
+    </table>
+  </section>
+
+</main>
+
+<script type="module">
+  import Auth from '../js/auth.js';
+
+  if (!Auth.isAuthenticated()) {
+    window.location.href = '../index.html';
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    Auth.logout();
+  });
+
+  document.querySelectorAll('.sidebar button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.page').forEach(p =>
+        p.classList.add('hidden')
+      );
+      document
+        .getElementById(btn.dataset.page)
+        .classList.remove('hidden');
+    });
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/alerts.js"></script>
+<script type="module" src="../js/province.js"></script>
+
+</body>
+</html>
